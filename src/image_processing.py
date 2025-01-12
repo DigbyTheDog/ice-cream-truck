@@ -8,7 +8,7 @@ import numpy as np
 DEBUG_MODE = True
 INITIAL_SCALE = 0.5          # First scale factor for easier contour detection
 MIN_PAPER_AREA = 1000        # Minimum contour area to recognize the paper
-MIN_DRAW_AREA = 200          # Minimum contour area to recognize parts of the drawing
+MIN_DRAW_AREA = 30          # Minimum contour area to recognize parts of the drawing
 
 # Global Canny thresholds (paper detection)
 CANNY_THRESH1_GLOBAL = 50

@@ -1,10 +1,10 @@
 import bpy
 
-file_path='../../venv/final.png'
-popsicle_width=0.3
-move_up=0.2
+file_path = 'output_image.png'
+popsicle_width = 0.3
+move_up = 0.2
 
-bpy.ops.wm.open_mainfile(filepath="Popsicle.blend")
+bpy.ops.wm.open_mainfile(filepath="src/Popsicle.blend")
 
 bpy.ops.image.import_as_mesh_planes(shader='SHADELESS', files=[{'name':file_path}])
 
@@ -21,6 +21,11 @@ else:
 # Assign the material to the popsicle
 plane.data.materials.clear()
 plane.data.materials.append(material)
+
+# Change the image on the material
+node = material.node_tree.nodes["Image Texture"]
+img = bpy.data.images[file_path]
+node.image = img
 
 # Extrude that bad boy
 bpy.ops.object.mode_set(mode='EDIT')
