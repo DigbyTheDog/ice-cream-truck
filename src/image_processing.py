@@ -1,6 +1,7 @@
 import sys
 import cv2
 import numpy as np
+import json
 
 # ----------------------------------------------------------
 # TWEAKABLE PARAMETERS
@@ -247,7 +248,58 @@ def union_of_all_contours_preserve_colors_with_cleanup_and_crop(input_path, outp
     cv2.imwrite(output_path, final_resized)
     print(f"Saved transparent PNG to: {output_path}")
 
+    detect_green_circles(output_path, "gumball_locations.json")
+
     return True
+
+
+def detect_green_circles(image_path, output_json):
+    # Load the image
+    image = cv2.imread(image_path)
+
+    # Convert to HSV color space
+    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+
+    # Define green color range (adjust as needed)
+    lower_green = np.array([35, 50, 50])  # Hue, Saturation, Value
+    upper_green = np.array([85, 255, 255])
+
+    # Create a mask for green areas
+    green_mask = cv2.inRange(hsv, lower_green, upper_green)
+
+    # Apply a Gaussian blur to smooth the mask
+    blurred_mask = cv2.GaussianBlur(green_mask, (9, 9), 2)
+
+    # Detect circles using Hough Circle Transform
+    circles = cv2.HoughCircles(
+        blurred_mask, cv2.HOUGH_GRADIENT, dp=1.2, minDist=20,
+        param1=50, param2=30, minRadius=5, maxRadius=50
+    )
+
+    # Prepare output data
+    circle_positions = []
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype("int")
+        for (x, y, r) in circles:
+            circle_positions.append({"x": int(x), "y": int(y), "radius": int(r)})
+
+            # Optional: Draw the circles on the image for debugging
+            cv2.circle(image, (x, y), r, (0, 255, 0), 2)  # Circle outline
+            cv2.circle(image, (x, y), 2, (0, 0, 255), 3)  # Center point
+
+    # Save the detected circle positions to a JSON file
+    with open(output_json, "w") as f:
+        json.dump(circle_positions, f)
+
+    # Debugging: Show the results
+    if DEBUG_MODE:
+        cv2.imshow("Green Mask", green_mask)
+        cv2.imshow("Detected Circles", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+    print(f"Detected {len(circle_positions)} green circles. Positions saved to {output_json}.")
+
 
 
 def main():
