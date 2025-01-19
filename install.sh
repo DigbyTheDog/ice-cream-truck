@@ -10,6 +10,6 @@ echo "Installing OpenCV and other dependencies..."
 pip3 install -r requirements.txt
 
 echo "Installing Blender..."
-sudo apt-get install -y blender=4.2.3
+sudo apt-get install -y blender
 
 echo "Setup complete!"
