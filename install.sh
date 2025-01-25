@@ -3,13 +3,20 @@
 echo "Updating package lists..."
 sudo apt-get update
 
-echo "Installing Python and pip..."
-sudo apt-get install -y python3 python3-pip
+echo "Installing Python and venv..."
+sudo apt-get install -y python3 python3-venv
 
-echo "Installing OpenCV and other dependencies..."
-pip3 install -r requirements.txt
+echo "Creating a virtual environment..."
+python3 -m venv venv
+
+echo "Activating the virtual environment..."
+source venv/bin/activate
+
+echo "Installing dependencies in the virtual environment..."
+pip install --upgrade pip
+pip install -r requirements.txt
 
 echo "Installing Blender..."
-sudo apt-get install -y blender
+sudo snap install blender --channel=4.3.2/stable
 
 echo "Setup complete!"
