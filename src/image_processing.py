@@ -310,7 +310,7 @@ def main():
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
-    union_of_all_contours_preserve_colors_with_cleanup_and_crop(input_file, output_file)
+    union_of_all_contours_preserve_colors_with_cleanup_and_crop(input_file, "isolated_drawing.png")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import bpy
 
-file_path = 'output_image.png'
+file_path = 'isolated_drawing.png'
 popsicle_width = 0.3
 move_up = 0.2
 
