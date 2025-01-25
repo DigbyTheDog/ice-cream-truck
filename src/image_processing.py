@@ -6,7 +6,7 @@ import json
 # ----------------------------------------------------------
 # TWEAKABLE PARAMETERS
 # ----------------------------------------------------------
-DEBUG_MODE = True
+DEBUG_MODE = False
 INITIAL_SCALE = 0.5          # First scale factor for easier contour detection
 MIN_PAPER_AREA = 1000        # Minimum contour area to recognize the paper
 MIN_DRAW_AREA = 30          # Minimum contour area to recognize parts of the drawing
@@ -303,12 +303,11 @@ def detect_green_circles(image_path, output_json):
 
 
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: python script.py <input_image> <output_image>")
+    if len(sys.argv) < 2:
+        print("Usage: python script.py <input_image>")
         sys.exit(1)
 
     input_file = sys.argv[1]
-    output_file = sys.argv[2]
 
     union_of_all_contours_preserve_colors_with_cleanup_and_crop(input_file, "isolated_drawing.png")
 
