@@ -1,4 +1,4 @@
-import bpy, json
+import bpy, json, random
 
 file_path = 'isolated_drawing.png'
 popsicle_width = 0.3
@@ -30,6 +30,8 @@ def place_gumballs_from_json(json_path):
         plane_y = plane_origin.y + (1 - (image_y / 300)) * plane_height  # Flip Y-axis
 
         # Duplicate the gumball
+        for i in range(0, random.randint(0, 50)): # This is a really lazy way to get a random color for the gumball
+            gumball.copy()
         gumball_copy = gumball.copy()
         gumball_copy.location = (plane_origin.z + 0.11, plane_x - 0.5, plane_y - 0.27)  # Need these stupid offsets for now
         bpy.context.collection.objects.link(gumball_copy)
