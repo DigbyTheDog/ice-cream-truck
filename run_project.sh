@@ -4,6 +4,7 @@ source venv/bin/activate
 
 rm captured_image.png
 rm isolated_drawing.png
+rm gumball_locations.json
 
 echo "Taking photo..."
 python3 src/take_photo.py
